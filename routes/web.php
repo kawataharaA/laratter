@@ -12,7 +12,10 @@ use App\Http\Controllers\TweetController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('tweet', TweetController::class);
+Route::group(['middleware' => 'auth'], function () {
+  Route::get('/tweet/mypage', [TweetController::class, 'mydata'])->name('tweet.mypage');
+  Route::resource('tweet', TweetController::class);
+});
 
 Route::get('/', function () {
     return view('welcome');
