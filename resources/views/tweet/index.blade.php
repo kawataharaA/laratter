@@ -21,12 +21,38 @@
               @foreach ($tweets as $tweet)
               <tr class="hover:bg-grey-lighter">
                 <td class="py-4 px-6 border-b border-grey-light">
+                  <p class="text-left text-grey-dark">{{$tweet->user->name}}</p>
                   <a href="{{ route('tweet.show',$tweet->id) }}">
-                    <p class="text-left text-grey-dark">{{$tweet->user->name}}</p>
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$tweet->tweet}}</h3>
                   </a>
                   <div class="flex">
-                     @if ($tweet->user_id === Auth::user()->id)
+                    <!-- 🔽 追加 -->
+                    <!-- favorite 状態で条件分岐 -->
+                    @if($tweet->users()->where('user_id', Auth::id())->exists())
+                    <!-- unfavorite ボタン -->
+                    <form action="{{ route('unfavorites',$tweet) }}" method="POST" class="text-left">
+                      @csrf
+                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-red py-1 px-2 focus:outline-none focus:shadow-outline">
+                        <svg class="h-6 w-6 text-red-500" fill="red" viewBox="0 0 24 24" stroke="red">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        {{ $tweet->users()->count() }}
+                      </button>
+                    </form>
+                    @else
+                    <!-- favorite ボタン -->
+                    <form action="{{ route('favorites',$tweet) }}" method="POST" class="text-left">
+                      @csrf
+                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-black py-1 px-2 focus:outline-none focus:shadow-outline">
+                        <svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="black">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        {{ $tweet->users()->count() }}
+                      </button>
+                    </form>
+                    @endif
+
+                    @if ($tweet->user_id === Auth::user()->id)
                     <!-- 更新ボタン -->
                     <form action="{{ route('tweet.edit',$tweet->id) }}" method="GET" class="text-left">
                       @csrf
