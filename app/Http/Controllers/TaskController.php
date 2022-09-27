@@ -16,7 +16,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('task.index');
+        $tasks = Task::getAllOrderByUpdated_at();
+        return view('task.index',compact('tasks'));
     }
 
     /**
@@ -37,7 +38,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // create()は最初から用意されている関数
+        // 戻り値は挿入されたレコードの情報
+        $result = Task::create($request->all());
+        // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
+        return redirect()->route('task.index');
     }
 
     /**
@@ -48,7 +53,8 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = Task::find($id);
+        return view('task.show', compact('task'));
     }
 
     /**
@@ -59,7 +65,8 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::find($id);
+        return view('task.edit', compact('task'));
     }
 
     /**
@@ -71,7 +78,9 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //データ更新処理
+        $result = Task::find($id)->update($request->all());
+        return redirect()->route('task.index');
     }
 
     /**
@@ -82,6 +91,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = Task::find($id)->delete();
+        return redirect()->route('task.index');
     }
 }
