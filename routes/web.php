@@ -19,6 +19,7 @@ use App\Http\Controllers\TaskController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+  Route::get('/task/mypage', [TaskController::class, 'mydata'])->name('task.mypage');
   Route::resource('task', TaskController::class);
   
   Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');

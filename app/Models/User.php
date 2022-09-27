@@ -58,4 +58,9 @@ public function followers()
 {
   return $this->belongsToMany(self::class, "follows", "following_id", "user_id")->withTimestamps();
 }
+public function userTasks()
+  {
+    return $this->hasMany(Task::class);
+  }
+
 }
