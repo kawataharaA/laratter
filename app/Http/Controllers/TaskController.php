@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Validator;
 use App\Models\Task;
+use App\Models\User;
+use Auth;
 
 class TaskController extends Controller
 {
@@ -38,6 +40,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        // 🔽 編集 フォームから送信されてきたデータとユーザIDをマージし，DBにinsertする
+        $data = $request->merge(['user_id' => Auth::user()->id])->all();
         // create()は最初から用意されている関数
         // 戻り値は挿入されたレコードの情報
         $result = Task::create($request->all());
@@ -93,5 +97,15 @@ class TaskController extends Controller
     {
         $result = Task::find($id)->delete();
         return redirect()->route('task.index');
+    }
+    public function mydata()
+    {
+        // Userモデルに定義したリレーションを使用してデータを取得する．
+        $tasks = User::query()
+        ->find(Auth::user()->id)
+        ->userTasks()
+        ->orderBy('created_at','desc')
+        ->get();
+        return view('task.index', compact('tasks'));
     }
 }

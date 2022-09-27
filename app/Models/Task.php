@@ -21,4 +21,5 @@ class Task extends Model
   {
     return self::orderBy('updated_at', 'desc')->get();
   }
+
 }

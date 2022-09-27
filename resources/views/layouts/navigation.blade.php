@@ -64,6 +64,13 @@
           </x-nav-link>
         </div>
 
+        <!-- 🔽 taskマイページへのリンクを追加 -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <x-nav-link :href="route('task.mypage')" :active="request()->routeIs('task.mypage')">
+            {{ __('MyToDo') }}
+          </x-nav-link>
+        </div>
+
       </div>
 
       <!-- Settings Dropdown -->
@@ -157,6 +164,13 @@
     <div class="pt-2 pb-3 space-y-1">
       <x-responsive-nav-link :href="route('task.create')" :active="request()->routeIs('task.create')">
         {{ __('TaskCreate') }}
+      </x-responsive-nav-link>
+    </div>
+
+    <!-- 🔽 taskマイページへのリンクを追加 -->
+    <div class="pt-2 pb-3 space-y-1">
+      <x-responsive-nav-link :href="route('task.mypage')" :active="request()->routeIs('task.mypage')">
+        {{ __('MyToDo') }}
       </x-responsive-nav-link>
     </div>
 
