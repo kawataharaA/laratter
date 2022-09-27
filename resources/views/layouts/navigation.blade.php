@@ -50,6 +50,20 @@
           </x-nav-link>
         </div>
 
+        <!-- 🔽 task一覧ページへのリンクを追加 -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <x-nav-link :href="route('task.index')" :active="request()->routeIs('task.index')">
+            {{ __('TODO') }}
+          </x-nav-link>
+        </div>
+
+        <!-- 🔽 task作成ページへのリンクを追加 -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <x-nav-link :href="route('task.create')" :active="request()->routeIs('task.create')">
+            {{ __('TaskCreate') }}
+          </x-nav-link>
+        </div>
+
       </div>
 
       <!-- Settings Dropdown -->
@@ -129,6 +143,20 @@
     <div class="pt-2 pb-3 space-y-1">
       <x-responsive-nav-link :href="route('search.input')" :active="request()->routeIs('search.input')">
         {{ __('Search') }}
+      </x-responsive-nav-link>
+    </div>
+
+    <!-- 🔽 task一覧ページへのリンクを追加 -->
+    <div class="pt-2 pb-3 space-y-1">
+      <x-responsive-nav-link :href="route('task.index')" :active="request()->routeIs('task.index')">
+        {{ __('TODO') }}
+      </x-responsive-nav-link>
+    </div>
+
+    <!-- 🔽 task作成ページへのリンクを追加 -->
+    <div class="pt-2 pb-3 space-y-1">
+      <x-responsive-nav-link :href="route('task.create')" :active="request()->routeIs('task.create')">
+        {{ __('TaskCreate') }}
       </x-responsive-nav-link>
     </div>
 
